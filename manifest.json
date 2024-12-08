@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "grab-commit-title",
+  "description": "Grab a commit title from GitLab",
+  "version": "1.0.0",
+  "permissions": ["http://*/*", "https://*/*"],
+
+  "icons": {
+    "128": "128.png",
+    "48": "48.png"
+  },
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}

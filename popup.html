@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Grab Commit Message</title>
+    <style>
+      body {
+        background-color: rgb(31, 31, 31);
+        color: rgb(218, 126, 255);
+        font-size: 14px;
+      }
+      #main {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      #copy-button {
+        cursor: pointer;
+      }
+      #commit-text {
+        white-space: nowrap;
+      }
+
+      #copy-button:active {
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div id="commit-text"></div>
+      <button id="copy-button">Copy</button>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
