@@ -1,13 +1,20 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("request", request);
+  const issueTitle = document.querySelector(
+    ".gh-header .gh-header-title .markdown-title"
+  ).innerText;
 
-  console.log(
-    sender.tab
-      ? "from a content script:" + sender.tab.url
-      : "from the extension"
-  );
+  const issueId = document.querySelector(
+    ".gh-header .gh-header-title span"
+  ).innerText;
 
-  const title = document.querySelector(".gh-header .markdown-title").innerText;
+  const issueType = "bugfix";
 
-  sendResponse({ id: "grab", data: title });
+  sendResponse({
+    id: "grab",
+    data: {
+      issueId,
+      issueTitle,
+      issueType,
+    },
+  });
 });

@@ -12,18 +12,40 @@ const grabCommitTitle = async () => {
       });
 
       console.log(response);
-      document.getElementById("commit-text").innerText = response.data;
+      const { issueId, issueTitle, issueType } = response.data;
+
+      document.getElementById(
+        "commit-text"
+      ).innerText = `${issueType}(${issueId}): ${issueTitle}`;
+      let formattedTitle = issueTitle
+        .toLowerCase()
+        .replaceAll(/\s/g, "-")
+        .replaceAll(":", "-")
+        .replaceAll(/\-{2,}/g, "-");
+
+      document.getElementById(
+        "branch-text"
+      ).innerText = `${issueType}/${issueId}-${formattedTitle}`;
     }
   } catch (error) {
     console.error(error);
   }
 };
 
-const onClickCopy = async () => {
+const onClickCopyCommit = async () => {
   try {
-    console.log("onClickCopy");
     await navigator.clipboard.writeText(
       document.getElementById("commit-text").innerText
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const onClickCopyBranch = async () => {
+  try {
+    await navigator.clipboard.writeText(
+      document.getElementById("branch-text").innerText
     );
   } catch (error) {
     console.error(error);
@@ -33,7 +55,12 @@ const onClickCopy = async () => {
 document.addEventListener("DOMContentLoaded", async (event) => {
   console.log("DOM fully loaded and parsed");
 
-  document.getElementById("copy-button").addEventListener("click", onClickCopy);
+  document
+    .getElementById("commit-copy-button")
+    .addEventListener("click", onClickCopyCommit);
+  document
+    .getElementById("branch-copy-button")
+    .addEventListener("click", onClickCopyBranch);
 
   grabCommitTitle();
 });
