@@ -3,7 +3,7 @@
   "name": "grab-git-infos",
   "description": "Grab a commit title from GitLab",
   "version": "1.0.0",
-  "permissions": ["http://*/*", "https://*/*"],
+  "permissions": [],
   "icons": {
     "128": "128.png",
     "48": "48.png"
@@ -13,7 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
+      "matches": ["https://*/*", "http://*/*"],
       "js": ["content-script.js"]
     }
   ]
