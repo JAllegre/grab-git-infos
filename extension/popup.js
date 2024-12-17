@@ -1,3 +1,43 @@
+
+function getIssueTypeInfos(issueType) {
+  switch (issueType) {
+    case 'hotfix':
+    case 'bug critique':
+      return {
+        issueTypeEmoji: '🔥',
+        issueTypeName: 'hotfix'
+      };
+
+    case 'bug':
+    case 'bugfix':
+      return {
+        issueTypeEmoji: "🐛",
+        issueTypeName: 'bugfix'
+      };
+
+    case 'enhancement':
+    case 'feat':
+    case 'feature':
+      return {
+        issueTypeEmoji: "✨",
+        issueTypeName: 'feature'
+      };
+
+    case 'config':
+    case 'conf':
+      return {
+        issueTypeEmoji: '🔧',
+        issueTypeName: 'config'
+      };
+
+    default:
+      return {
+        issueTypeEmoji: '?',
+        issueTypeName: 'unknown'
+      };
+  }
+}
+
 const grabCommitTitle = async () => {
   try {
     const [tab] = await chrome.tabs.query({
@@ -14,14 +54,16 @@ const grabCommitTitle = async () => {
       console.log(response);
       const { issueId, issueTitle, issueType } = response.data;
 
-      document.getElementById('commit-text').innerText = `${issueType}(${issueId}): ${issueTitle}`;
+      const { issueTypeEmoji, issueTypeName } = getIssueTypeInfos(issueType);
+
+      document.getElementById('commit-text').innerText = `${issueTypeEmoji}${issueTypeName}(${issueId}): ${issueTitle}`;
       let formattedTitle = issueTitle
         .toLowerCase()
         .replaceAll(/\s/g, '-')
         .replaceAll(':', '-')
         .replaceAll(/\-{2,}/g, '-');
 
-      document.getElementById('branch-text').innerText = `${issueType}/${issueId}-${formattedTitle}`;
+      document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${formattedTitle}`;
     }
   } catch (error) {
     console.error(error);

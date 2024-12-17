@@ -15,27 +15,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   const issueId = idSelector?.innerText || '?';
 
-  let typeFound = '?';
-  document.querySelectorAll('.issuable-show-labels .gl-label-text-scoped').forEach((node) => {
-    let currentLabel = node.innerText.trim().toLowerCase();
-
-    switch (currentLabel) {
-      case 'hotfix':
-        typeFound = '🔥hotfix';
-        break;
-      case 'bugfix':
-      case 'bug':
-        typeFound = '🐛bugfix';
-        break;
-      case 'feature':
-        typeFound = '✨feature';
-        break;
-      default:
-        typeFound = currentLabel;
-    }
-  });
-
-  const issueType = typeFound || '?';
+  var issueType = "" ;
+  document.querySelectorAll( 'aside .issuable-show-labels .gl-link.gl-label-link').forEach((node)=>{ 
+      const labelGroup = node?.childNodes?.[0]?.innerText?.toLowerCase().trim();
+      if(labelGroup === 'type'){
+        issueType = node?.childNodes?.[1]?.innerText?.toLowerCase().trim() || node?.childNodes?.[2]?.innerText?.toLowerCase().trim();
+      }
+  })
 
   sendResponse({
     id: 'grab',
