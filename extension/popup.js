@@ -1,5 +1,4 @@
-
-function getIssueTypeInfos(issueType) {
+const getIssueTypeInfos = (issueType) => {
   switch (issueType) {
     case 'hotfix':
     case 'bug critique':
@@ -11,15 +10,22 @@ function getIssueTypeInfos(issueType) {
     case 'bug':
     case 'bugfix':
       return {
-        issueTypeEmoji: "🐛",
+        issueTypeEmoji: '🐛',
         issueTypeName: 'bugfix'
+      };
+    case 'ergo':
+    case 'ui':
+    case 'ux':
+      return {
+        issueTypeEmoji: '🎨',
+        issueTypeName: 'ergo'
       };
 
     case 'enhancement':
     case 'feat':
     case 'feature':
       return {
-        issueTypeEmoji: "✨",
+        issueTypeEmoji: '✨',
         issueTypeName: 'feature'
       };
 
@@ -36,7 +42,17 @@ function getIssueTypeInfos(issueType) {
         issueTypeName: 'unknown'
       };
   }
-}
+};
+
+const translate = async (text) => {
+  const translatedResponse = await fetch(
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=${encodeURIComponent(text)}`
+  );
+
+  const translatedResponseJson = await translatedResponse.json();
+
+  return translatedResponseJson?.[0]?.[0]?.[0] || text;
+};
 
 const grabCommitTitle = async () => {
   try {
@@ -51,19 +67,42 @@ const grabCommitTitle = async () => {
         data: ''
       });
 
-      console.log(response);
-      const { issueId, issueTitle, issueType } = response.data;
+      if (!response) {
+        console.error('grab-git-info/grabCommitTitle', 'Response is empty');
+        return;
+      }
+
+      let { issueId, issueTitle, issueType } = response.data;
+
+      try {
+        issueTitle = await translate(issueTitle);
+      } catch (error) {
+        console.error('grab-git-info/grabCommitTitle', 'Unable to translate', error);
+      }
 
       const { issueTypeEmoji, issueTypeName } = getIssueTypeInfos(issueType);
+      let titleForCommitText = issueTitle
+        .trim()
+        .replaceAll(':', ' ')
+        .replaceAll('/', ' - ')
+        .replaceAll('\\', ' - ')
+        .replaceAll(/ {2,}/g, ' ')
+        .replaceAll(/\-{2,}/g, '-');
+      titleForCommitText = titleForCommitText[0].toUpperCase() + titleForCommitText.slice(1);
 
-      document.getElementById('commit-text').innerText = `${issueTypeEmoji}${issueTypeName}(${issueId}): ${issueTitle}`;
-      let formattedTitle = issueTitle
+      document.getElementById('commit-text').innerText =
+        `${issueTypeEmoji}${issueTypeName}(${issueId}): ${titleForCommitText}`;
+
+      // Build branch name
+      let titleForBranchName = issueTitle
         .toLowerCase()
         .replaceAll(/\s/g, '-')
         .replaceAll(':', '-')
+        .replaceAll('/', '-')
+        .replaceAll('\\', '-')
         .replaceAll(/\-{2,}/g, '-');
 
-      document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${formattedTitle}`;
+      document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${titleForBranchName}`;
     }
   } catch (error) {
     console.error(error);
@@ -72,9 +111,10 @@ const grabCommitTitle = async () => {
 
 const onClickCopyCommit = async () => {
   try {
+    translate("Et rien d'autre que toi");
     await navigator.clipboard.writeText(document.getElementById('commit-text').innerText);
   } catch (error) {
-    console.error(error);
+    console.error('grab-git-info/onClickCopyCommit', error);
   }
 };
 
@@ -87,7 +127,7 @@ const onClickCopyBranch = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', async (event) => {
-  console.log('DOM fully loaded and parsed');
+  console.log('grab-git-info/onClickCopyCommit', 'DOM fully loaded and parsed');
 
   document.getElementById('commit-copy-button').addEventListener('click', onClickCopyCommit);
   document.getElementById('branch-copy-button').addEventListener('click', onClickCopyBranch);
