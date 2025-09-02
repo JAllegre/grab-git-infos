@@ -14,6 +14,12 @@
         padding: 10px;
       }
 
+      .title{
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+      }
+
       .line {
         display: flex;
         align-items: center;
@@ -22,9 +28,15 @@
         padding: 5px 0;
       }
 
+      .line .line-title{
+        font-weight: bold;
+      }
+
       #commit-text,
       #branch-text {
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .copy-button {
@@ -47,7 +59,9 @@
 
   <body>
     <div id="main">
+      <div class="title">GRAB GIT ISSUE INFO</div>
       <div class="line">
+        <div class="line-title">Commit:</div>
         <div id="commit-text"></div>
         <button id="commit-copy-button" class="copy-button" title="copy">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -59,6 +73,7 @@
       </div>
 
       <div class="line">
+        <div class="line-title">Branch:</div>
         <div id="branch-text"></div>
         <button id="branch-copy-button" class="copy-button" title="copy">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

@@ -22,6 +22,7 @@ const getIssueTypeInfos = (issueType) => {
       };
 
     case 'enhancement':
+    case 'improvement':
     case 'feat':
     case 'feature':
       return {
@@ -36,6 +37,23 @@ const getIssueTypeInfos = (issueType) => {
         issueTypeName: 'config'
       };
 
+    case 'ci':
+      return {
+        issueTypeEmoji: '🤖',
+        issueTypeName: 'ci'
+      };
+
+    case 'translation':
+      return {
+        issueTypeEmoji: '🌍',
+        issueTypeName: 'translation'
+      };
+
+    case 'dev':
+      return {
+        issueTypeEmoji: '⭐',
+        issueTypeName: 'dev'
+      };
     default:
       return {
         issueTypeEmoji: '?',
@@ -98,7 +116,10 @@ const grabCommitTitle = async () => {
         .toLowerCase()
         .replaceAll(/\s/g, '-')
         .replaceAll(':', '-')
+        .replaceAll(',', '-')
         .replaceAll('/', '-')
+        .replaceAll('"', '')
+        .replaceAll("'", '')
         .replaceAll('\\', '-')
         .replaceAll(/\-{2,}/g, '-');
 
