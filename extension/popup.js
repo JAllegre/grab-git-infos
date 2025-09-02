@@ -132,7 +132,6 @@ const grabCommitTitle = async () => {
 
 const onClickCopyCommit = async () => {
   try {
-    translate("Et rien d'autre que toi");
     await navigator.clipboard.writeText(document.getElementById('commit-text').innerText);
   } catch (error) {
     console.error('grab-git-info/onClickCopyCommit', error);
