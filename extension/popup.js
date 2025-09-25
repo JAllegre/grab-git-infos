@@ -6,7 +6,6 @@ const getIssueTypeInfos = (issueType) => {
         issueTypeEmoji: '🔥',
         issueTypeName: 'hotfix'
       };
-
     case 'bug':
     case 'bugfix':
       return {
@@ -20,29 +19,29 @@ const getIssueTypeInfos = (issueType) => {
         issueTypeEmoji: '🎨',
         issueTypeName: 'ergo'
       };
-
     case 'enhancement':
     case 'improvement':
+      return {
+        issueTypeEmoji: '💫',
+        issueTypeName: 'enhancement'
+      };
     case 'feat':
     case 'feature':
       return {
         issueTypeEmoji: '✨',
         issueTypeName: 'feature'
       };
-
     case 'config':
     case 'conf':
       return {
         issueTypeEmoji: '🔧',
         issueTypeName: 'config'
       };
-
     case 'ci':
       return {
         issueTypeEmoji: '🤖',
         issueTypeName: 'ci'
       };
-
     case 'translation':
       return {
         issueTypeEmoji: '🌍',
