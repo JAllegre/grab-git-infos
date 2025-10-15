@@ -113,7 +113,17 @@ const grabCommitTitle = async () => {
       const unusedEnglishWords = ['the', 'a', 'an', 'to', 'for', 'and', 'but', 'or', 'on', 'in', 'with', 'is', 'are', 'of', 'by', 'at', 'from', 'as', 'that', 'this', 'it', 'its', 'be', 'was', 'were', 'which'];
 
       // Build branch name
-      let titleForBranchName = issueTitle.toLowerCase().replaceAll(new RegExp(`\\b(${unusedEnglishWords.join('|')})\\b`, 'g'), '').replaceAll(/\s/g, '-').replaceAll(':', '-').replaceAll(',', '-').replaceAll('/', '-').replaceAll('"', '').replaceAll("'", '').replaceAll('\\', '-').replaceAll(/\-{2,}/g, '-');
+      let titleForBranchName = issueTitle
+        .toLowerCase()
+        .replaceAll(new RegExp(`\\b(${unusedEnglishWords.join('|')})\\b`, 'g'), '')
+        .replaceAll(/\s/g, '-')
+        .replaceAll(':', '-')
+        .replaceAll(',', '-')
+        .replaceAll('/', '-')
+        .replaceAll('"', '')
+        .replaceAll("'", '')
+        .replaceAll('\\', '-')
+        .replaceAll(/\-{2,}/g, '-');
 
       document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${titleForBranchName}`;
     }
