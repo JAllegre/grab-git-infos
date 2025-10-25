@@ -110,7 +110,34 @@ const grabCommitInfos = async () => {
       document.getElementById('commit-text').innerText =
         `${issueTypeEmoji}${issueTypeName}(${issueId}): ${titleForCommitText}`;
 
-      const unusedEnglishWords = ['the', 'a', 'an', 'to', 'for', 'and', 'but', 'or', 'on', 'in', 'with', 'is', 'are', 'of', 'by', 'at', 'from', 'as', 'that', 'this', 'it', 'its', 'be', 'was', 'were', 'which'];
+      const unusedEnglishWords = [
+        'the',
+        'a',
+        'an',
+        'to',
+        'for',
+        'and',
+        'but',
+        'or',
+        'on',
+        'in',
+        'with',
+        'is',
+        'are',
+        'of',
+        'by',
+        'at',
+        'from',
+        'as',
+        'that',
+        'this',
+        'it',
+        'its',
+        'be',
+        'was',
+        'were',
+        'which'
+      ];
 
       // Build branch name
       let titleForBranchName = issueTitle
@@ -119,10 +146,9 @@ const grabCommitInfos = async () => {
         .replaceAll(new RegExp(`\\b(${unusedEnglishWords.join('|')})\\b`, 'g'), '')
         .replaceAll(/\s/g, '-')
         .replaceAll(/[:,;/"'\\]/g, '-')
-        .replaceAll(/\-{2,}/g, '-')
+        .replaceAll(/\-{2,}/g, '-');
 
-        titleForBranchName = titleForBranchName.split('-').slice(0, 5).join('-'); // limit to first x words
-
+      titleForBranchName = titleForBranchName.split('-').slice(0, 5).join('-'); // limit to first x words
 
       document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${titleForBranchName}`;
     }

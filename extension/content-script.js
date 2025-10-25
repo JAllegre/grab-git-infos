@@ -5,6 +5,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     // try github
     titleSelector = document.querySelector('[data-testid="issue-title"]');
   }
+
   const issueTitle = titleSelector?.innerText || '?';
 
   // Get #id from gitlab
