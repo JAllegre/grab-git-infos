@@ -71,7 +71,7 @@ const translate = async (text) => {
   return translatedResponseJson?.[0]?.[0]?.[0] || text;
 };
 
-const grabCommitTitle = async () => {
+const grabCommitInfos = async () => {
   try {
     const [tab] = await chrome.tabs.query({
       active: true,
@@ -85,7 +85,7 @@ const grabCommitTitle = async () => {
       });
 
       if (!response) {
-        console.error('grab-git-info/grabCommitTitle', 'Response is empty');
+        console.error('grab-git-info/grabCommitInfos', 'Response is empty');
         return;
       }
 
@@ -94,7 +94,7 @@ const grabCommitTitle = async () => {
       try {
         issueTitle = await translate(issueTitle);
       } catch (error) {
-        console.error('grab-git-info/grabCommitTitle', 'Unable to translate', error);
+        console.error('grab-git-info/grabCommitInfos', 'Unable to translate', error);
       }
 
       const { issueTypeEmoji, issueTypeName } = getIssueTypeInfos(issueType);
@@ -103,7 +103,7 @@ const grabCommitTitle = async () => {
         .replaceAll(':', ' ')
         .replaceAll('/', ' - ')
         .replaceAll('\\', ' - ')
-        .replaceAll(/ {2,}/g, ' ')
+        .replaceAll(/\s{2,}/g, ' ')
         .replaceAll(/\-{2,}/g, '-');
       titleForCommitText = titleForCommitText[0].toUpperCase() + titleForCommitText.slice(1);
 
@@ -114,16 +114,15 @@ const grabCommitTitle = async () => {
 
       // Build branch name
       let titleForBranchName = issueTitle
+        .trim()
         .toLowerCase()
         .replaceAll(new RegExp(`\\b(${unusedEnglishWords.join('|')})\\b`, 'g'), '')
         .replaceAll(/\s/g, '-')
-        .replaceAll(':', '-')
-        .replaceAll(',', '-')
-        .replaceAll('/', '-')
-        .replaceAll('"', '')
-        .replaceAll("'", '')
-        .replaceAll('\\', '-')
-        .replaceAll(/\-{2,}/g, '-');
+        .replaceAll(/[:,;/"'\\]/g, '-')
+        .replaceAll(/\-{2,}/g, '-')
+
+        titleForBranchName = titleForBranchName.split('-').slice(0, 5).join('-'); // limit to first x words
+
 
       document.getElementById('branch-text').innerText = `${issueTypeName}/${issueId}-${titleForBranchName}`;
     }
@@ -134,6 +133,7 @@ const grabCommitTitle = async () => {
 
 const onClickCopyCommit = async () => {
   try {
+    // Copy commit text to clipboard
     await navigator.clipboard.writeText(document.getElementById('commit-text').innerText);
   } catch (error) {
     console.error('grab-git-info/onClickCopyCommit', error);
@@ -142,6 +142,7 @@ const onClickCopyCommit = async () => {
 
 const onClickCopyBranch = async () => {
   try {
+    // Copy branch name to clipboard
     await navigator.clipboard.writeText(document.getElementById('branch-text').innerText);
   } catch (error) {
     console.error(error);
@@ -149,10 +150,10 @@ const onClickCopyBranch = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', async (event) => {
-  console.log('grab-git-info/onClickCopyCommit', 'DOM fully loaded and parsed');
+  console.log('grab-git-info/popus.js', 'DOM fully loaded and parsed');
 
   document.getElementById('commit-copy-button').addEventListener('click', onClickCopyCommit);
   document.getElementById('branch-copy-button').addEventListener('click', onClickCopyBranch);
 
-  grabCommitTitle();
+  grabCommitInfos();
 });
