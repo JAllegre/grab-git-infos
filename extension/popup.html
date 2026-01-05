@@ -8,6 +8,7 @@
         background-color: rgb(58, 0, 41);
         color: rgb(242 211 255);
         font-size: 16px;
+        width: fit-content;
       }
 
       #main {
@@ -18,6 +19,7 @@
         display: flex;
         justify-content: center;
         font-weight: bold;
+        font-size: 16px;
         color: darkorchid;
       }
 
@@ -37,7 +39,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 640px;
+        max-width: 600px;
       }
       .button-box {
         flex-grow: 1;
@@ -60,6 +62,7 @@
         opacity: 0.6;
       }
       .footer {
+        padding-top: 10px;
         font-size: 11px;
         font-style: italic;
         text-align: right;
@@ -70,7 +73,7 @@
 
   <body>
     <div id="main">
-      <div class="title">GRAB GIT ISSUE INFO</div>
+      <div class="title">~ GRAB ISSUE INFO ~</div>
       <div class="line">
         <div class="line-title">Commit:</div>
         <div id="commit-text"></div>
@@ -99,7 +102,7 @@
           </button>
         </div>
       </div>
-      <div class="footer">Traduction by "Google Translate" / Recommended by "Michel Dumas"</div>
+      <div class="footer">Fixed by Le GriB / Traduction by "Google Translate" / Recommended by "Michel Dumas"</div>
     </div>
 
     <script src="popup.js"></script>
