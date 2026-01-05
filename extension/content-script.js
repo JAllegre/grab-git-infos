@@ -9,9 +9,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   const issueTitle = titleSelector?.innerText || '?';
 
-  let idSelector = document.querySelector('.router-link-exact-active') // Get #id from gitlab
-    || document.querySelector('a[data-testid="work-item-drawer-ref-link"]') // Get #id from gitlab's splitted view
+  let idSelector = 
+    document.querySelector('a[data-testid="work-item-drawer-ref-link"]') // Get #id from gitlab's splitted view
     || document.querySelector('[data-component="PH_Title"] span') // Get #id from github;
+
+  if (!idSelector) {
+    idSelector = document.querySelectorAll('li:last-child[class="gl-breadcrumb-item gl-breadcrumb-item-sm"]') // Get #id from gitlab
+
+    const lastNode = idSelector[0];
+
+    if (lastNode) {
+      idSelector = lastNode?.childNodes?.[0];
+    }
+  }
 
   const issueId = idSelector?.innerText?.replace('patv', '') || '?';
 
