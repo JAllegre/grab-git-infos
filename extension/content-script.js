@@ -9,15 +9,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   const issueTitle = titleSelector?.innerText || '?';
 
-  // Get #id from gitlab
-  let idSelector = document.querySelector('.router-link-exact-active');
+  let idSelector = document.querySelector('.router-link-exact-active') // Get #id from gitlab
+    || document.querySelector('a[data-testid="work-item-drawer-ref-link"]') // Get #id from gitlab's splitted view
+    || document.querySelector('[data-component="PH_Title"] span') // Get #id from github;
 
-  if (!idSelector) {
-    // try github
-    idSelector = document.querySelector('[data-component="PH_Title"] span');
-  }
-
-  const issueId = idSelector?.innerText || '?';
+  const issueId = idSelector?.innerText?.replace('patv', '') || '?';
 
   let issueType = '';
   document.querySelectorAll('a[class="gl-label-link gl-link gl-label-link-underline"]').forEach((node) => {
