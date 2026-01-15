@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     titleSelector = document.querySelector('[data-testid="issue-title"]');
   }
 
-  const issueTitle = titleSelector?.innerText || '?';
+  const issueTitle = titleSelector?.innerText.replaceAll("\"", '\'') || '?';
 
   let idSelector = 
     document.querySelector('a[data-testid="work-item-drawer-ref-link"]') // Get #id from gitlab's splitted view
