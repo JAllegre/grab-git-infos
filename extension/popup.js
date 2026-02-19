@@ -110,6 +110,7 @@ const grabCommitInfos = async () => {
       document.getElementById('commit-text').innerText =
         `${issueTypeEmoji}${issueTypeName}(${issueId}): ${titleForCommitText}`;
 
+      // Build branch name
       const unusedEnglishWords = [
         'the',
         'a',
@@ -139,14 +140,15 @@ const grabCommitInfos = async () => {
         'which'
       ];
 
-      // Build branch name
+      
       let titleForBranchName = issueTitle
         .trim()
         .toLowerCase()
         .replaceAll(new RegExp(`\\b(${unusedEnglishWords.join('|')})\\b`, 'g'), '')
         .replaceAll(/\s/g, '-')
-        .replaceAll(/[:,;/"'\\]/g, '-')
-        .replaceAll(/\-{2,}/g, '-');
+        .replaceAll(/[\.:,;/"'\\]/g, '-')
+        .replaceAll(/\-{2,}/g, '-')
+        .replaceAll(/(“|"|'|`)/g, '');
 
       titleForBranchName = titleForBranchName.split('-').slice(0, 5).join('-'); // limit to first x words
 
