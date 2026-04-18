@@ -15,5 +15,3 @@ Grab branch and commit informations from a Gitlab/Github issue
 - npm i
 - Modify extension code
 - Reload extension (Extensions / Manage extensions)
-
-

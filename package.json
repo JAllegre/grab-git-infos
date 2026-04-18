@@ -1,15 +1,19 @@
 {
   "name": "grab-git-infos",
-  "version": "1.3.0",
+  "version": "0.2.0",
   "main": "popup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pretty": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "zip": "mkdir dist/ > /dev/null 2>&1;rm -f  dist/extension.zip > /dev/null 2>&1;zip -r dist/extension.zip extension/"
   },
   "author": "Julien Allegre",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
     "prettier": "3.4.2"
   }
 }

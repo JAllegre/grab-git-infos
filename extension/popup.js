@@ -90,6 +90,9 @@ const grabCommitInfos = async () => {
       }
 
       let { issueId, issueTitle, issueType } = response.data;
+      issueId = issueId || '?';
+      issueType = issueType || '?';
+      issueTitle = issueTitle || '?';
 
       try {
         issueTitle = await translate(issueTitle);
@@ -140,7 +143,6 @@ const grabCommitInfos = async () => {
         'which'
       ];
 
-      
       let titleForBranchName = issueTitle
         .trim()
         .toLowerCase()
@@ -179,6 +181,9 @@ const onClickCopyBranch = async () => {
 
 document.addEventListener('DOMContentLoaded', async (event) => {
   console.log('grab-git-info/popus.js', 'DOM fully loaded and parsed');
+  const manifestData = chrome.runtime.getManifest();
+  document.getElementById('app-version').innerText = manifestData.version || '?';
+  document.getElementById('app-name').innerText = (manifestData.name || '?').replace('BETA', '(BETA)');
 
   document.getElementById('commit-copy-button').addEventListener('click', onClickCopyCommit);
   document.getElementById('branch-copy-button').addEventListener('click', onClickCopyBranch);

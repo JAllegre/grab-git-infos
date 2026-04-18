@@ -3,77 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <title>Grab Git Infos</title>
-    <style>
-      body {
-        background-color: rgb(58, 0, 41);
-        color: rgb(242 211 255);
-        font-size: 16px;
-        width: fit-content;
-      }
-
-      #main {
-        padding: 10px;
-      }
-
-      .title {
-        display: flex;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 16px;
-        color: darkorchid;
-      }
-
-      .line {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 5px 0;
-      }
-
-      .line .line-title {
-        font-weight: bold;
-      }
-
-      #commit-text,
-      #branch-text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 600px;
-      }
-      .button-box {
-        flex-grow: 1;
-        display: flex;
-        justify-content: flex-end;
-      }
-      .copy-button {
-        cursor: pointer;
-        background-color: transparent;
-        border: none;
-        outline: none;
-      }
-
-      .copy-button > svg {
-        width: 22px;
-        fill: rgb(242 211 255);
-      }
-
-      .copy-button:active {
-        opacity: 0.6;
-      }
-      .footer {
-        padding-top: 10px;
-        font-size: 11px;
-        font-style: italic;
-        text-align: right;
-        color: darkorchid;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="popup.css" />
   </head>
 
   <body>
     <div id="main">
-      <div class="title">~ GRAB ISSUE INFO ~</div>
+      <div class="title">~ &nbsp; <span id="app-name"></span> &nbsp; ~</div>
       <div class="line">
         <div class="line-title">Commit:</div>
         <div id="commit-text"></div>
@@ -102,7 +37,7 @@
           </button>
         </div>
       </div>
-      <div class="footer">Fixed by Le GriB / Traduction by "Google Translate" / Recommended by "Michel Dumas"</div>
+      <div class="footer">version : <span id="app-version"></span></div>
     </div>
 
     <script src="popup.js"></script>

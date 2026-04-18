@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "grab-git-infos",
-  "description": "Grab a commit title from GitLab",
-  "version": "1.0.2",
+  "name": "Grab git infos BETA",
+  "description": "Grab infos from a gitlab/github issue page in order to generate a formatted and translated commit title and branch name. THIS EXTENSION IF FOR BETA TESTING",
+  "version": "0.3.0",
   "permissions": [],
   "icons": {
     "128": "128.png",
