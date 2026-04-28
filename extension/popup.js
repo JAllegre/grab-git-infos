@@ -49,9 +49,10 @@ const getIssueTypeInfos = (issueType) => {
       };
 
     case 'dev':
+    case 'tech':
       return {
-        issueTypeEmoji: '⭐',
-        issueTypeName: 'dev'
+        issueTypeEmoji: '⚙️',
+        issueTypeName: 'tech'
       };
     default:
       return {
